@@ -28,6 +28,19 @@ body {
 a { color: inherit; }
 
 /* ============================================================
+   Site container — matches brainstorm preview width
+   ============================================================ */
+.nav,
+.hero-section,
+.about-section,
+.site-footer,
+.page {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ============================================================
    Nav (sticky top, text only)
    ============================================================ */
 .nav {
@@ -42,7 +55,7 @@ a { color: inherit; }
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ink-dark);
-  background: transparent;
+  background: var(--paper);
   pointer-events: auto;
 }
 .nav a {
@@ -57,14 +70,14 @@ a { color: inherit; }
    HERO (home page)
    ============================================================ */
 .hero-section {
-  min-height: 100vh;
+  min-height: 700px;
   position: relative;
   overflow: hidden;
 }
 .hero-area {
   padding: 44px;
   padding-top: 180px;
-  min-height: calc(100vh - 80px);
+  min-height: 700px;
   position: relative;
 }
 
