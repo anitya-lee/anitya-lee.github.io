@@ -649,7 +649,7 @@
   // Async text pool loader — overrides inline CONFIG.phrases / .keywords
   // ─────────────────────────────────────────────────────────
   async function loadTextPool() {
-    const candidates = ['/assets/data/text-pool.json', '/files/text-pool.json'];
+    const candidates = ['assets/data/text-pool.json', '/assets/data/text-pool.json', '/files/text-pool.json'];
     for (const url of candidates) {
       try {
         const r = await fetch(url, { cache: 'no-cache' });

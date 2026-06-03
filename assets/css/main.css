@@ -31,10 +31,10 @@ body {
 
 /* Custom cursor — stippled hand-axe (mouse.png) */
 html, body, button, a, input, textarea, select, label {
-  cursor: url('/assets/mouse.png') 25 4, auto;
+  cursor: url('../mouse.png') 25 4, auto;
 }
 a, button, [role="button"], input[type="submit"], input[type="button"], input[type="range"], .replay {
-  cursor: url('/assets/mouse.png') 25 4, pointer;
+  cursor: url('../mouse.png') 25 4, pointer;
 }
 
 a { color: inherit; }
@@ -344,8 +344,8 @@ a { color: inherit; }
   display: block;
   z-index: 1;
   pointer-events: none;
-  -webkit-mask-image: url('/assets/brain_origin.png');
-          mask-image: url('/assets/brain_origin.png');
+  -webkit-mask-image: url('../brain_origin.png');
+          mask-image: url('../brain_origin.png');
   -webkit-mask-size: 100% 100%;
           mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
@@ -444,10 +444,10 @@ a { color: inherit; }
 }
 
 /* Variants — image fills the bar and stretches with it; no synthetic background fill */
-.about-section--dark .bar--blue   { background-image: url('/assets/blue_nav.png');   color: #ffffff; }
-.about-section--dark .bar--black  { background-image: url('/assets/black_nav.png');  color: #ffffff; }
-.about-section--dark .bar--yellow { background-image: url('/assets/yellow_nav.png'); color: #ffffff; }
-.about-section--dark .bar--green  { background-image: url('/assets/green_nav.png');  color: #ffffff; }
+.about-section--dark .bar--blue   { background-image: url('../blue_nav.png');   color: #ffffff; }
+.about-section--dark .bar--black  { background-image: url('../black_nav.png');  color: #ffffff; }
+.about-section--dark .bar--yellow { background-image: url('../yellow_nav.png'); color: #ffffff; }
+.about-section--dark .bar--green  { background-image: url('../green_nav.png');  color: #ffffff; }
 
 /* Label — always visible, anchored LEFT, sits over the image */
 .about-section--dark .bar .label {
@@ -590,7 +590,7 @@ a { color: inherit; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
-  background-image: url('/assets/footer.png');
+  background-image: url('../footer.png');
   background-repeat: no-repeat;
   background-position: bottom center;
   background-size: 100% auto;     /* preserves footer.png aspect; bottom-anchored ground */
