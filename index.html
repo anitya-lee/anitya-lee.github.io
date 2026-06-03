@@ -5,8 +5,6 @@ description: I connect Technology, Human Experience, and the Questions worth sol
 ---
 
 <section class="hero-section" id="main">
-  <button class="replay" onclick="runTyping()">↻ replay</button>
-
   <div class="hero-area">
     <div class="hero" id="hero">I&nbsp;connect&nbsp;<span class="kw-tech">Technology<span class="c1"></span><span class="c2"></span></span>,<br><span class="kw-human">Human Experience</span>,<br>and the <span class="kw-q"><span class="bracket">[</span>Questions<span class="bracket">]</span></span> worth solving.</div>
 
@@ -19,24 +17,24 @@ description: I connect Technology, Human Experience, and the Questions worth sol
   </div>
 </section>
 
-<section class="about-section" id="about">
-  <div class="label">[ 02 / About ]</div>
-  <h2>I came in through code, then business, then the people who live with both. I never picked one.</h2>
+<section class="about-section about-section--dark" id="about">
+  <div class="about-ascii-bg" id="about-ascii-bg" aria-hidden="true"></div>
+  <div class="brain-frame">
+    <canvas class="about-bg" id="about-bg" aria-hidden="true"></canvas>
+    <img class="brain-right" src="{{ '/assets/right_brain.png' | relative_url }}" alt="" aria-hidden="true">
 
-  <div class="essay">
-    <p class="lead">I make AI products and watch how people feel about them.</p>
-    <p>Most days I'm building something with my hands and watching someone use it — a researcher and a product manager at once. Before this I built a small wellness brand from zero to 866% funded, then spent three years inside a Korean telco shipping AI products.</p>
-    <p>What I keep coming back to is the seam: where technology, the body, and the questions we don't yet have words for sit next to each other. I don't believe they are separate.</p>
-    <p>I ask my own questions. I read across fields. I build, and watch.</p>
+    <nav class="nav-bars" id="folderStack" aria-label="About navigation">
+      <a class="bar bar--blue"   href="#tech-human"><span class="label">Technology &amp;<br>Human Experience</span></a>
+      <a class="bar bar--black"  href="#thinking"><span class="label">Thinking</span></a>
+      <a class="bar bar--yellow" href="#curiosities"><span class="label">Curiosities</span></a>
+      <a class="bar bar--green"  href="#body-mind"><span class="label">Body &amp; Mind</span></a>
+    </nav>
   </div>
-
-  <div class="bio">
-    <div class="row"><span class="k">Located</span><span class="v">Seoul, KR · sometimes by the sea</span></div>
-    <div class="row"><span class="k">Studying</span><span class="v">M.S. HCI/UX, Yonsei (2027)</span></div>
-    <div class="row"><span class="k">Worked</span><span class="v">Technical PM, LG U+ · 3 yrs</span></div>
-    <div class="row"><span class="k">Founded</span><span class="v">PLANTEA · 866% crowd-funded · 2019</span></div>
-    <div class="row"><span class="k">Published</span><span class="v">CHI EA 2026 · KCA 2025-26</span></div>
+  <div class="about-content">
+    <!-- About content placeholder — fill with your own copy when ready -->
   </div>
 </section>
 
 <script src="{{ '/assets/js/hero.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/about-bg.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/about-ascii-bg.js' | relative_url }}" defer></script>

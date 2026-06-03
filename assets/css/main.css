@@ -10,11 +10,15 @@
   --olive: #6b7a4a;
   --cobalt: #2c46e8;
   --cream: #faf0e8;
+  --nav-h: 100px;          /* sticky nav reserved height (padding 56+24 + line) */
 }
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-h);   /* anchor scrolls land below sticky nav */
+}
 
 body {
   margin: 0;
@@ -23,6 +27,14 @@ body {
   font-family: 'Space Grotesk', -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom cursor — stippled hand-axe (mouse.png) */
+html, body, button, a, input, textarea, select, label {
+  cursor: url('/assets/mouse.png') 25 4, auto;
+}
+a, button, [role="button"], input[type="submit"], input[type="button"], input[type="range"], .replay {
+  cursor: url('/assets/mouse.png') 25 4, pointer;
 }
 
 a { color: inherit; }
@@ -49,7 +61,7 @@ a { color: inherit; }
   z-index: 50;
   display: flex;
   justify-content: flex-end;
-  padding: 24px 44px;
+  padding: 56px 44px 24px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   letter-spacing: 0.22em;
@@ -70,14 +82,18 @@ a { color: inherit; }
    HERO (home page)
    ============================================================ */
 .hero-section {
-  min-height: 700px;
+  min-height: calc(100vh - var(--nav-h));   /* fit available viewport below sticky nav */
   position: relative;
   overflow: hidden;
+  /* Responsive hero scaling — text + inline keyword pills share this base.
+     At 1440px viewport this resolves to ~48px (~original 45px feel);
+     scales up on 1920/2560/4K so the hero doesn't shrink visually. */
+  --hero-base: clamp(32px, 3.3vw, 72px);
 }
 .hero-area {
-  padding: 44px;
-  padding-top: 180px;
-  min-height: 700px;
+  padding: clamp(28px, 3vw, 64px);
+  padding-top: clamp(96px, 9.6vw, 208px);   /* lifted ~20% upward so hero text clears the bottom-right video */
+  min-height: calc(100vh - var(--nav-h));
   position: relative;
 }
 
@@ -100,7 +116,7 @@ a { color: inherit; }
 
 .hero {
   --base: 45;
-  font-size: calc(var(--base) * 1px);
+  font-size: var(--hero-base);
   line-height: 1.4;
   letter-spacing: -0.02em;
   color: var(--ink-dark);
@@ -164,7 +180,7 @@ a { color: inherit; }
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
   font-weight: 400;
-  font-size: calc(var(--base, 45) * 1.105px);
+  font-size: calc(var(--hero-base) * 1.105);
   line-height: 1;
   color: var(--cream);
   vertical-align: -3px;
@@ -185,7 +201,7 @@ a { color: inherit; }
   font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
   color: var(--cobalt);
-  font-size: calc(var(--base, 45) * 0.842px);
+  font-size: calc(var(--hero-base) * 0.842);
   letter-spacing: -0.04em;
   vertical-align: 0.08em;
   transition: color 0.08s;
@@ -193,7 +209,7 @@ a { color: inherit; }
 .kw-q .bracket {
   color: var(--cobalt);
   font-weight: 400;
-  font-size: calc(var(--base, 45) * 1px);
+  font-size: var(--hero-base);
   transition: color 0.08s;
 }
 .kw-q.hide-frame { color: var(--ink-dark); }
@@ -217,9 +233,9 @@ a { color: inherit; }
 /* Hero video object (bottom right) */
 .obj-video {
   position: absolute;
-  right: 44px;
-  bottom: 40px;
-  width: 700px;
+  right: clamp(20px, 3vw, 64px);
+  bottom: clamp(20px, 2.8vw, 56px);
+  width: clamp(420px, 50vw, 1100px);
   aspect-ratio: 1030 / 460;
   overflow: hidden;
   pointer-events: none;
@@ -237,6 +253,7 @@ a { color: inherit; }
 .about-section {
   padding: 120px 44px;
   border-top: 1px dashed rgba(26, 26, 26, 0.2);
+  position: relative;
 }
 .about-section .label {
   font-family: 'JetBrains Mono', monospace;
@@ -283,6 +300,210 @@ a { color: inherit; }
   letter-spacing: 0.18em;
   font-size: 9px;
 }
+
+/* ============================================================
+   ABOUT SECTION — DARK variant (kinetic typography bg)
+   ============================================================ */
+.about-section.about-section--dark {
+  background: var(--paper);
+  color: var(--ink-dark);
+  border-top: 0;
+  padding: 80px 44px;
+  overflow: hidden;
+  position: relative;
+  min-height: calc(100vh - var(--nav-h));
+  /* full-bleed — escape the .about-section 1280px cap so the ASCII bg can
+     fill viewport edge-to-edge. brain-frame keeps its visual size via
+     its own max-width below. */
+  max-width: none;
+  /* force inner brain-frame to true center via flex */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Brain composition — fills available width up to 1192px (previous section
+   content width); section is now full-bleed but brain stays at its visual size */
+.about-section--dark .brain-frame {
+  position: relative;
+  width: 100%;
+  max-width: 1192px;
+  margin: 0 auto;
+  aspect-ratio: 1672 / 941;
+  transform: scale(1.5) translateX(4%);   /* 1.5× scale + slight right shift */
+  transform-origin: center;
+}
+
+/* Canvas clipped to LEFT hemisphere — brain-shape mask + hard half-clip.
+   Fully opaque; no horizontal fade. */
+.about-section--dark .about-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 1;
+  pointer-events: none;
+  -webkit-mask-image: url('/assets/brain_origin.png');
+          mask-image: url('/assets/brain_origin.png');
+  -webkit-mask-size: 100% 100%;
+          mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+          mask-position: center;
+  clip-path: inset(0 50% 0 0);   /* keep only left half */
+}
+
+/* Right hemisphere image — overlaid on right half */
+.about-section--dark .brain-right {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ============================================================
+   RIGHT-BRAIN NAV BARS — image stays fixed, bar extends rightward,
+   label always visible on the LEFT (over the image)
+   ============================================================ */
+.about-section--dark .nav-bars {
+  /* === Sizing (0.6× of prior height) === */
+  --bar-h:         clamp(50px, 4.2vw, 64px);             /* HEIGHT only — slimmer */
+  --bar-img-w:     clamp(220px, 17.5vw, 280px);          /* WIDTH unchanged (decoupled from height — image stretches more horizontally) */
+  --bar-extend:    clamp(90px, 8.4vw, 144px);            /* extra width revealed on hover (back to previous) */
+  --bar-w-max:     calc(var(--bar-img-w) + var(--bar-extend));
+  --bar-overlap:   14px;
+
+  /* === Motion === */
+  --t-dur:         460ms;
+  --t-ease:        cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* === Position === */
+  --stack-right:   7%;                                   /* sits over the right-brain illustration */
+
+  /* === Label (scaled down to match smaller bars) === */
+  --label-pad-l:   18px;
+  --label-size:    clamp(9px, 0.75vw, 11px);
+  --label-letter:  0.22em;
+
+  position: absolute;
+  right: var(--stack-right);
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--bar-w-max);                               /* fixed container = max bar width on hover */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;                               /* bars anchored LEFT → grow rightward */
+  z-index: 5;
+  pointer-events: auto;
+}
+
+.about-section--dark .bar {
+  position: relative;
+  display: block;
+  width: var(--bar-img-w);                               /* base width = image natural width */
+  height: var(--bar-h);                                  /* fixed height — image height never changes */
+  background-size: 100% 100%;                            /* image fills the bar → stretches horizontally as width grows */
+  background-position: center;
+  background-repeat: no-repeat;
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--label-size);
+  letter-spacing: var(--label-letter);
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    width var(--t-dur) var(--t-ease),
+    filter 240ms ease;
+}
+
+/* Overlap: every bar after the first lifts up to slightly cover the previous one's bottom */
+.about-section--dark .bar + .bar {
+  margin-top: calc(-1 * var(--bar-overlap));
+}
+
+/* Stacking: later bars sit ON TOP → upper bar's bottom edge is covered by next bar's top edge */
+.about-section--dark .bar:nth-child(1) { z-index: 1; }
+.about-section--dark .bar:nth-child(2) { z-index: 2; }
+.about-section--dark .bar:nth-child(3) { z-index: 3; }
+.about-section--dark .bar:nth-child(4) { z-index: 4; }
+
+.about-section--dark .bar:hover,
+.about-section--dark .bar:focus-visible {
+  width: 100%;                                           /* extends right to container's full width */
+  filter: drop-shadow(0 8px 22px rgba(0,0,0,0.35));
+  z-index: 10;
+  outline: none;
+}
+
+/* Variants — image fills the bar and stretches with it; no synthetic background fill */
+.about-section--dark .bar--blue   { background-image: url('/assets/blue_nav.png');   color: #ffffff; }
+.about-section--dark .bar--black  { background-image: url('/assets/black_nav.png');  color: #ffffff; }
+.about-section--dark .bar--yellow { background-image: url('/assets/yellow_nav.png'); color: #ffffff; }
+.about-section--dark .bar--green  { background-image: url('/assets/green_nav.png');  color: #ffffff; }
+
+/* Label — always visible, anchored LEFT, sits over the image */
+.about-section--dark .bar .label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: var(--bar-img-w);                               /* spans only the image area */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: var(--label-pad-l);
+  color: #ffffff !important;                              /* pure white — overrides generic .about-section--dark .label rule */
+  opacity: 1 !important;                                  /* overrides generic 0.55 opacity */
+  font-weight: 700;                                       /* explicit bold (don't rely on inheritance) */
+  text-align: left;
+  line-height: 1.18;
+  pointer-events: none;
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition: transform var(--t-dur) var(--t-ease);
+}
+
+/* On hover, label stretches rightward in sync with the bar */
+.about-section--dark .bar:hover .label,
+.about-section--dark .bar:focus-visible .label {
+  transform: scaleX(1.18);
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .about-section--dark .nav-bars {
+    --bar-h: 72px;
+    --bar-extend: 100px;
+    --bar-overlap: 18px;
+    --label-size: 13px;
+    --label-pad-l: 18px;
+    --stack-right: 4%;
+  }
+}
+.about-section--dark .about-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 120px 44px;
+  color: #F3EFE7;
+}
+.about-section--dark .label   { color: #F3EFE7; opacity: 0.55; }
+.about-section--dark h2       { color: #F3EFE7; }
+.about-section--dark .essay   { color: #E5E0D6; }
+.about-section--dark .bio     {
+  color: #B5B0A4;
+  border-top-color: rgba(243, 239, 231, 0.18);
+}
+.about-section--dark .bio .k  { opacity: 0.45; color: #B5B0A4; }
 
 /* ============================================================
    PAGE WRAPPER (essay/builds/etc.)
@@ -356,7 +577,10 @@ a { color: inherit; }
    FOOTER (Contact)
    ============================================================ */
 .site-footer {
-  padding: 56px 44px;
+  /* full-bleed so the ground image stretches edge-to-edge */
+  max-width: none;
+  width: 100%;
+  padding: 56px clamp(28px, 4vw, 80px) clamp(180px, 22vw, 360px);
   border-top: 1px dashed rgba(26, 26, 26, 0.25);
   font-family: 'IBM Plex Mono', monospace;
   font-size: 11px;
@@ -366,6 +590,13 @@ a { color: inherit; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
+  background-image: url('/assets/footer.png');
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 100% auto;     /* preserves footer.png aspect; bottom-anchored ground */
+  background-color: var(--paper);
+  position: relative;
+  z-index: 1;
 }
 .site-footer a { color: var(--cobalt); text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
@@ -386,6 +617,7 @@ a { color: inherit; }
   .nav { padding: 16px 24px; flex-wrap: wrap; }
   .nav a { margin-left: 16px; font-size: 10px; }
 
+  .hero-section { --hero-base: 28px; }
   .hero-area { padding: 100px 24px 24px; padding-top: 120px; }
   .hero { --base: 28; max-width: 100%; }
 
@@ -398,6 +630,8 @@ a { color: inherit; }
   }
 
   .about-section { padding: 80px 24px; }
+  .about-section--dark { padding: 0; }
+  .about-section--dark .about-content { padding: 80px 24px; }
   .about-section h2 { font-size: 32px; }
   .about-section .bio .row { flex-direction: column; gap: 2px; }
   .about-section .bio .k { min-width: 0; }
@@ -410,6 +644,7 @@ a { color: inherit; }
 }
 
 @media (max-width: 480px) {
+  .hero-section { --hero-base: 22px; }
   .hero { --base: 22; }
 }
 
@@ -426,4 +661,75 @@ a { color: inherit; }
   .kw-tech > .c1, .kw-tech > .c2 { animation: none !important; }
   .hero .tchar { opacity: 1; transition: none; }
   .kw-human { background-size: 100% 100% !important; animation: none !important; }
+}
+
+/* ============================================================
+   ABOUT — ASCII motion bg (yuri lee binary tile + 8-lang greeting cycle)
+   Renders behind brain composition. Driven by assets/js/about-ascii-bg.js
+   ============================================================ */
+.about-section--dark .about-ascii-bg {
+  position: absolute;
+  /* Extend to section's border edges (compensate section padding 80 44).
+     Media queries below override left/right for narrow aspect + reset
+     entirely on mobile where section padding becomes 0. */
+  top: -80px;
+  bottom: -80px;
+  left: -44px;
+  right: -44px;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+}
+.about-section--dark .about-ascii-bg .aab-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+}
+.about-section--dark .about-ascii-bg .aab-row {
+  font-family: 'JetBrains Mono', 'Noto Sans KR', 'Noto Sans JP', 'Noto Sans SC', 'Noto Sans Arabic', 'Noto Sans Devanagari', monospace;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0;
+  white-space: pre;
+  color: rgba(26, 26, 26, 0.18);
+  height: 22px;
+  overflow: hidden;
+  direction: ltr;
+  unicode-bidi: plaintext;
+  font-feature-settings: "tnum" 1, "zero" 1;
+  font-variant-numeric: tabular-nums;
+}
+.about-section--dark .about-ascii-bg .aab-ev {
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+  white-space: pre;
+  color: rgba(26, 26, 26, 1);
+  height: 22px;
+  line-height: 22px;
+  direction: ltr;
+  unicode-bidi: plaintext;
+}
+.about-section--dark .about-ascii-bg .aab-ev.l1 { color: rgba(26, 26, 26, 0.55); }
+.about-section--dark .about-ascii-bg .aab-ev.l2 { color: rgba(26, 26, 26, 0.38); }
+/* Lift brain composition above the ASCII bg */
+.about-section--dark .brain-frame { z-index: 1; }
+
+/* ── Narrow viewports (squarer than 16:9) — reduce side padding ── */
+@media (max-aspect-ratio: 16/9) {
+  .nav            { padding-left: 20px; padding-right: 20px; }
+  .hero-area      { padding-left: 20px; padding-right: 20px; }
+  .about-section  { padding-left: 20px; padding-right: 20px; }
+  .about-section--dark { padding-left: 20px; padding-right: 20px; }
+  .about-section--dark .about-ascii-bg { left: -20px; right: -20px; }
+}
+
+/* Mobile: section padding is reset to 0, so the ASCII bg matches section bounds */
+@media (max-width: 900px) {
+  .about-section--dark .about-ascii-bg {
+    top: 0; right: 0; bottom: 0; left: 0;
+  }
 }
