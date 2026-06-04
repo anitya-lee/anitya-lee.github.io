@@ -477,15 +477,36 @@ a { color: inherit; }
   transform: scaleX(1.18);
 }
 
-/* Mobile */
+/* Mobile — nav-bars container becomes wider than the squeezed brain-frame at
+   narrow viewports, so the right-anchored stack visually spills LEFT.
+   Cancel the 1.5× brain scale, shrink the bars, and anchor flush right. */
 @media (max-width: 900px) {
+  /* Higher specificity than .about-section--dark alone — needed because the
+     base rule lives on .about-section.about-section--dark (specificity 0,2,0) */
+  .about-section.about-section--dark { padding: 60px 20px; }
+
+  .about-section--dark .brain-frame {
+    transform: none;
+  }
+
   .about-section--dark .nav-bars {
-    --bar-h: 72px;
-    --bar-extend: 100px;
-    --bar-overlap: 18px;
-    --label-size: 13px;
-    --label-pad-l: 18px;
-    --stack-right: 4%;
+    --bar-h:        52px;
+    --bar-img-w:    clamp(150px, 38vw, 200px);
+    --bar-extend:   clamp(50px, 12vw, 80px);
+    --bar-overlap:  14px;
+    --label-size:   11px;
+    --label-pad-l:  14px;
+    --stack-right:  0;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-section--dark .nav-bars {
+    --bar-h:        46px;
+    --bar-img-w:    clamp(130px, 40vw, 170px);
+    --bar-extend:   clamp(40px, 10vw, 60px);
+    --label-size:   10px;
+    --label-pad-l:  12px;
   }
 }
 .about-section--dark .about-content {
@@ -582,13 +603,16 @@ a { color: inherit; }
   width: 100%;
   padding: 56px clamp(28px, 4vw, 80px) clamp(180px, 22vw, 360px);
   border-top: 1px dashed rgba(26, 26, 26, 0.25);
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  line-height: 1.7;
-  color: #3a3a3a;
-  letter-spacing: 0.03em;
+  /* Footer typography — Space Grotesk (matches hero body) */
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  font-size: clamp(13px, 1vw, 16px);
+  line-height: 1.8;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 500;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 24px;
   background-image: url('../footer.png');
   background-repeat: no-repeat;
@@ -598,14 +622,28 @@ a { color: inherit; }
   position: relative;
   z-index: 1;
 }
-.site-footer a { color: var(--cobalt); text-decoration: none; }
-.site-footer a:hover { text-decoration: underline; }
+.site-footer a { color: rgba(255, 255, 255, 0.55); text-decoration: none; }
+.site-footer a:hover { color: #ffffff; text-decoration: none; }
+.site-footer .contact-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.site-footer .contact-icon {
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+  opacity: 0.9;
+}
 .site-footer .col h4 {
+  margin: 0 0 12px;
+  color: #ffffff;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  opacity: 0.55;
+  font-weight: 700;
+  opacity: 1;
   font-weight: 400;
   margin: 0 0 10px;
 }
