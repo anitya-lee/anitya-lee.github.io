@@ -27,6 +27,10 @@ body {
   font-family: 'Space Grotesk', -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* prevent iOS Safari from auto-inflating small text — required so
+     the mobile nav-bar labels keep their declared CSS size */
+  -webkit-text-size-adjust: 100%;
+          text-size-adjust: 100%;
 }
 
 /* Custom cursor — stippled hand-axe (mouse.png) */
@@ -498,11 +502,11 @@ a { color: inherit; }
      label glyphs so that, after the brain-frame's 1.9× scale, the text
      reads as small subtitle/caption size — not as section headings. */
   .about-section--dark .nav-bars {
-    --bar-h:          18px;
+    --bar-h:          23px;
     --bar-img-w:      120px;
     --bar-extend:     22px;
-    --bar-overlap:    5px;
-    --label-size:     4px;
+    --bar-overlap:    6px;
+    --label-size:     2px;
     --label-letter:   0.14em;
     --label-pad-l:    6px;
     --stack-right:    4%;
@@ -519,11 +523,11 @@ a { color: inherit; }
 
 @media (max-width: 480px) {
   .about-section--dark .nav-bars {
-    --bar-h:       16px;
+    --bar-h:       21px;
     --bar-img-w:   108px;
     --bar-extend:  18px;
-    --bar-overlap: 4px;
-    --label-size:  3.5px;
+    --bar-overlap: 5px;
+    --label-size:  1.75px;
     --label-pad-l: 5px;
   }
 }
