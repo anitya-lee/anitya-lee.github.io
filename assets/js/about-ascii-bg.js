@@ -31,8 +31,12 @@
   ];
 
   const PADDING            = 0;
-  const FONT_SIZE          = 16;
-  const LINE_HEIGHT        = 22;
+  /* Mobile uses smaller glyphs so the grid has enough usable rows
+     (the previous 16/22 produced ~31 rows on a phone — minus the
+     14+14 HUD-band skip that left only 3 rows for greeting events). */
+  const IS_MOBILE          = window.matchMedia('(max-width: 900px)').matches;
+  const FONT_SIZE          = IS_MOBILE ? 10 : 16;
+  const LINE_HEIGHT        = IS_MOBILE ? 14 : 22;
   const MAX_EVENTS         = 100;
   const NOISE_BASE_OPACITY = 0.18;
 
@@ -360,7 +364,13 @@
     measureCharWidth();
     COLS_VAL = Math.floor((W - PADDING * 2) / CHAR_WIDTH);
     ROWS_VAL = Math.floor((H - PADDING * 2) / LINE_HEIGHT);
-    if (COLS_VAL < 20 || ROWS_VAL < 30) return;
+    if (COLS_VAL < 20 || ROWS_VAL < 12) return;
+
+    /* HUD-band skip scales with the row count — was hardcoded 14/14,
+       which left only ~3 usable rows on mobile (31 total). 8% each
+       side keeps the HUD readable while leaving plenty of room. */
+    rowMgr.topSkip    = Math.max(2, Math.floor(ROWS_VAL * 0.08));
+    rowMgr.bottomSkip = Math.max(2, Math.floor(ROWS_VAL * 0.08));
 
     buildNoise();
     for (let r = 0; r < ROWS_VAL; r++) {

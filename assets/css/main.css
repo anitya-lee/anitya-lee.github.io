@@ -487,22 +487,24 @@ a { color: inherit; }
   .about-section.about-section--dark {
     padding: 60px 24px;
   }
-  /* Brain-frame: keep wide aspect; modest scale so the brain reads
-     bigger without forcing nav-bars off-screen. */
+  /* Brain-frame: keep wide aspect; bigger scale so brain reads larger
+     on phones (1.5× the prior 1.25 = ~1.9). Section overflow:hidden
+     clips horizontal spill. */
   .about-section--dark .brain-frame {
-    transform: scale(1.25);
+    transform: scale(1.9);
     transform-origin: center;
   }
-  /* Nav-bars: wider bars give the 2-line labels enough horizontal
-     room ("Technology &" / "Human Experience"), smaller font keeps the
-     post-scale visual size reasonable. */
+  /* Nav-bars sit over the right hemisphere. Tighter dimensions so
+     label glyphs (already amplified by parent's 1.9× scale) read as
+     normal-size text instead of looking oversized. */
   .about-section--dark .nav-bars {
-    --bar-h:          34px;
-    --bar-img-w:      150px;
-    --bar-extend:     36px;
-    --bar-overlap:    10px;
-    --label-size:     7px;
-    --label-pad-l:    8px;
+    --bar-h:          22px;
+    --bar-img-w:      130px;
+    --bar-extend:     26px;
+    --bar-overlap:    7px;
+    --label-size:     5px;
+    --label-letter:   0.18em;
+    --label-pad-l:    6px;
     --stack-right:    4%;
   }
   /* Flex column + justify-content centers the wrapped 2-line label
@@ -522,12 +524,12 @@ a { color: inherit; }
 
 @media (max-width: 480px) {
   .about-section--dark .nav-bars {
-    --bar-h:       30px;
-    --bar-img-w:   132px;
-    --bar-extend:  28px;
-    --bar-overlap: 8px;
-    --label-size:  6.5px;
-    --label-pad-l: 6px;
+    --bar-h:       20px;
+    --bar-img-w:   118px;
+    --bar-extend:  22px;
+    --bar-overlap: 6px;
+    --label-size:  4.5px;
+    --label-pad-l: 5px;
   }
 }
 .about-section--dark .about-content {
@@ -1159,9 +1161,20 @@ a { color: inherit; }
   .about-section--dark .about-ascii-bg { left: -20px; right: -20px; }
 }
 
-/* Mobile: section padding is reset to 0, so the ASCII bg matches section bounds */
+/* Mobile: section padding is reset to 0, so the ASCII bg matches section bounds.
+   Font sizes here must mirror about-ascii-bg.js IS_MOBILE constants so the
+   JS-measured CHAR_WIDTH lines up with the rendered grid. */
 @media (max-width: 900px) {
   .about-section--dark .about-ascii-bg {
     top: 0; right: 0; bottom: 0; left: 0;
+  }
+  .about-section--dark .about-ascii-bg .aab-row {
+    font-size: 10px;
+    line-height: 14px;
+    height: 14px;
+  }
+  .about-section--dark .about-ascii-bg .aab-ev {
+    height: 14px;
+    line-height: 14px;
   }
 }
