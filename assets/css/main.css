@@ -514,7 +514,7 @@ a { color: inherit; }
     --label-size:     13px;
     --label-letter:   0.14em;
     --label-pad-l:    13px;
-    --stack-right:    12%;
+    --stack-right:    7%;
   }
   .about-section--dark .bar .label {
     padding: 0 8px 0 var(--label-pad-l);
