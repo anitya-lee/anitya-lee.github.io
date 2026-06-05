@@ -490,11 +490,14 @@ a { color: inherit; }
     padding: 60px 24px;
   }
 
-  /* Brain-frame becomes a flow container (no aspect-ratio cap, no scale) */
+  /* Brain-frame: flow container, scaled up so the brain illustration
+     (which only fills ~40% of its 1672×941 canvas) reads at usable size.
+     Section overflow:hidden clips horizontal spill. */
   .about-section--dark .brain-frame {
-    transform: none;
+    transform: scale(1.4);
+    transform-origin: center;
     width: 100%;
-    max-width: 460px;
+    max-width: none;
     margin: 0 auto;
     aspect-ratio: auto;
     height: auto;
@@ -522,7 +525,9 @@ a { color: inherit; }
     aspect-ratio: 1672 / 941;
   }
 
-  /* Nav-bars: relative flow below the brain visual, centered, fuller bars */
+  /* Nav-bars: relative flow below the brain visual.
+     Negative margin pulls the bars upward to compensate for the brain's
+     scale(1.4) extra bottom whitespace. */
   .about-section--dark .nav-bars {
     position: relative;
     top: auto;
@@ -530,7 +535,7 @@ a { color: inherit; }
     transform: none;
     width: 100%;
     max-width: 320px;
-    margin: 32px auto 0;
+    margin: -40px auto 0;
     --stack-right:    auto;
     --bar-h:          56px;
     --bar-img-w:      clamp(200px, 60vw, 280px);
@@ -542,7 +547,6 @@ a { color: inherit; }
 }
 
 @media (max-width: 480px) {
-  .about-section--dark .brain-frame { max-width: 360px; }
   .about-section--dark .nav-bars {
     max-width: 280px;
     --bar-h:       50px;
@@ -799,8 +803,72 @@ a { color: inherit; }
   pointer-events: none;
   background: radial-gradient(120% 90% at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.55) 100%);
 }
+/* ─── Mobile (≤900px) — Tech-style sections ───────────
+   Issues being fixed:
+   1. Row grid (44px / 100px / 1fr / auto) compresses title to a
+      4-line stack on phones.
+   2. Title wraps the slash-glyph span to a new line because line-height
+      0 + inline-block makes it overflow row height.
+   3. Mosaic image is 360px wide but the column container is narrower,
+      causing alignment drift. */
 @media (max-width: 900px) {
-  .th-mosaic { max-width: 360px; }
+  .th-section {
+    padding: 80px 24px 60px;
+  }
+  .th-hud {
+    top: 28px;
+    left: 24px;
+    right: 24px;
+    font-size: 9px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .th-inner {
+    gap: 40px;
+    min-height: 0;
+  }
+  .th-title {
+    font-size: clamp(28px, 8vw, 40px);
+    line-height: 1.05;
+  }
+  /* Keep the slash on the same line as the next word; allow soft break
+     between the two words instead. */
+  .th-title br { display: none; }
+  .th-title .amp {
+    vertical-align: -0.06em;
+    margin: 0 0.16em;
+  }
+
+  .th-rows { margin-top: 0; }
+  .th-row {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 6px;
+    padding: 18px 0;
+    align-items: start;
+  }
+  .th-row:hover { padding-left: 0; }
+  .th-row .idx,
+  .th-row .date {
+    display: inline;
+    font-size: 10px;
+  }
+  .th-row .idx { margin-right: 10px; }
+  .th-row .title {
+    grid-row: 2;
+    font-size: 17px;
+    line-height: 1.3;
+  }
+  .th-row .read {
+    grid-row: 3;
+    justify-self: start;
+    margin-top: 4px;
+  }
+
+  .th-mosaic {
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
+  }
 }
 /* Separator slash — inline SVG sized to match the uppercase cap-height so
    the slash visually spans exactly from baseline to cap-line of the text
