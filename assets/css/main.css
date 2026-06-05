@@ -507,14 +507,14 @@ a { color: inherit; }
   .about-section--dark .nav-bars {
     transform: translateY(-50%) scale(0.526);
     transform-origin: right center;
-    --bar-h:          30px;
-    --bar-img-w:      170px;
-    --bar-extend:     36px;
-    --bar-overlap:    8px;
-    --label-size:     10px;
-    --label-letter:   0.18em;
-    --label-pad-l:    10px;
-    --stack-right:    4%;
+    --bar-h:          39px;
+    --bar-img-w:      221px;
+    --bar-extend:     47px;
+    --bar-overlap:    10px;
+    --label-size:     13px;
+    --label-letter:   0.14em;
+    --label-pad-l:    13px;
+    --stack-right:    12%;
   }
   .about-section--dark .bar .label {
     padding: 0 8px 0 var(--label-pad-l);
@@ -525,12 +525,12 @@ a { color: inherit; }
 
 @media (max-width: 480px) {
   .about-section--dark .nav-bars {
-    --bar-h:       26px;
-    --bar-img-w:   150px;
-    --bar-extend:  30px;
-    --bar-overlap: 7px;
-    --label-size:  9px;
-    --label-pad-l: 8px;
+    --bar-h:       34px;
+    --bar-img-w:   195px;
+    --bar-extend:  39px;
+    --bar-overlap: 9px;
+    --label-size:  12px;
+    --label-pad-l: 10px;
   }
 }
 .about-section--dark .about-content {
