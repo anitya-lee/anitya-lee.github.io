@@ -494,41 +494,36 @@ a { color: inherit; }
     transform: scale(1.9);
     transform-origin: center;
   }
-  /* Nav-bars sit over the right hemisphere. Tighter dimensions so
-     label glyphs (already amplified by parent's 1.9× scale) read as
-     normal-size text instead of looking oversized. */
+  /* Nav-bars sit over the right hemisphere. Smaller bars + tighter
+     label glyphs so that, after the brain-frame's 1.9× scale, the text
+     reads as small subtitle/caption size — not as section headings. */
   .about-section--dark .nav-bars {
-    --bar-h:          22px;
-    --bar-img-w:      130px;
-    --bar-extend:     26px;
-    --bar-overlap:    7px;
-    --label-size:     5px;
-    --label-letter:   0.18em;
+    --bar-h:          18px;
+    --bar-img-w:      120px;
+    --bar-extend:     22px;
+    --bar-overlap:    5px;
+    --label-size:     4px;
+    --label-letter:   0.14em;
     --label-pad-l:    6px;
     --stack-right:    4%;
   }
-  /* Flex column + justify-content centers the wrapped 2-line label
-     vertically; row-direction flex was making single words break to
-     their own line via min-content sizing on narrow widths. */
+  /* Center the (possibly 2-line) label vertically; let it wrap on the
+     explicit <br> only — flex-direction stays row (base rule), and we
+     just override padding + line-height for the tighter bar height. */
   .about-section--dark .bar .label {
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
     padding: 0 6px 0 var(--label-pad-l);
-    line-height: 1.1;
-    text-align: left;
+    line-height: 1.05;
     overflow: hidden;
-    white-space: normal;
   }
 }
 
 @media (max-width: 480px) {
   .about-section--dark .nav-bars {
-    --bar-h:       20px;
-    --bar-img-w:   118px;
-    --bar-extend:  22px;
-    --bar-overlap: 6px;
-    --label-size:  4.5px;
+    --bar-h:       16px;
+    --bar-img-w:   108px;
+    --bar-extend:  18px;
+    --bar-overlap: 4px;
+    --label-size:  3.5px;
     --label-pad-l: 5px;
   }
 }
