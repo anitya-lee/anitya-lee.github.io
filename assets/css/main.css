@@ -479,43 +479,54 @@ a { color: inherit; }
 }
 
 /* ─── Mobile (≤900px) ─────────────────────────────────
-   Preserve the desktop structure: brain-frame keeps its aspect ratio,
-   nav-bars stay absolutely-positioned overlapping the right hemisphere.
-   Only adjust sizes so the bars actually fit over the brain visual
-   without spilling left past the section padding. */
+   Desktop layout preserved: brain-frame keeps wide aspect with a scale
+   transform, nav-bars stay absolutely positioned over the right
+   hemisphere. Bar dimensions are tuned so labels never wrap to a 3rd
+   line at narrow viewports. */
 @media (max-width: 900px) {
   .about-section.about-section--dark {
     padding: 60px 24px;
   }
-  /* Brain-frame: keep wide aspect; scale 1.4 so the brain reads big
-     enough at narrow viewports. Section overflow:hidden clips spill. */
+  /* Brain-frame: keep wide aspect; modest scale so the brain reads
+     bigger without forcing nav-bars off-screen. */
   .about-section--dark .brain-frame {
-    transform: scale(1.4);
+    transform: scale(1.25);
     transform-origin: center;
   }
-  /* Nav-bars: stay absolutely-positioned over the right hemisphere
-     exactly like desktop, just shrunk to fit inside it. The right-hemi
-     image occupies roughly the right 35-45% of the 1672×941 canvas, so
-     bar widths max out near 130px in pre-scale CSS units (the parent's
-     1.4× scale grows them visually). */
+  /* Nav-bars: wider bars give the 2-line labels enough horizontal
+     room ("Technology &" / "Human Experience"), smaller font keeps the
+     post-scale visual size reasonable. */
   .about-section--dark .nav-bars {
-    --bar-h:          26px;
-    --bar-img-w:      120px;
-    --bar-extend:     32px;
-    --bar-overlap:    6px;
-    --label-size:     8px;
+    --bar-h:          34px;
+    --bar-img-w:      150px;
+    --bar-extend:     36px;
+    --bar-overlap:    10px;
+    --label-size:     7px;
     --label-pad-l:    8px;
-    --stack-right:    6%;
+    --stack-right:    4%;
+  }
+  /* Flex column + justify-content centers the wrapped 2-line label
+     vertically; row-direction flex was making single words break to
+     their own line via min-content sizing on narrow widths. */
+  .about-section--dark .bar .label {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 6px 0 var(--label-pad-l);
+    line-height: 1.1;
+    text-align: left;
+    overflow: hidden;
+    white-space: normal;
   }
 }
 
 @media (max-width: 480px) {
   .about-section--dark .nav-bars {
-    --bar-h:       22px;
-    --bar-img-w:   100px;
-    --bar-extend:  26px;
-    --bar-overlap: 5px;
-    --label-size:  7px;
+    --bar-h:       30px;
+    --bar-img-w:   132px;
+    --bar-extend:  28px;
+    --bar-overlap: 8px;
+    --label-size:  6.5px;
     --label-pad-l: 6px;
   }
 }
