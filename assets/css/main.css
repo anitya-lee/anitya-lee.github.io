@@ -498,37 +498,39 @@ a { color: inherit; }
     transform: scale(1.9);
     transform-origin: center;
   }
-  /* Nav-bars sit over the right hemisphere. Smaller bars + tighter
-     label glyphs so that, after the brain-frame's 1.9× scale, the text
-     reads as small subtitle/caption size — not as section headings. */
+  /* Nav-bars sit over the right hemisphere. The brain-frame parent has
+     transform: scale(1.9) on mobile which would otherwise blow up the
+     label glyphs 1.9× as well. Counter-scale the nav-bars by 1/1.9
+     (≈0.526) so the bars + labels render at their declared CSS sizes
+     visually, while the brain visual stays large. translateY(-50%)
+     is preserved from the base rule's vertical centering. */
   .about-section--dark .nav-bars {
-    --bar-h:          23px;
-    --bar-img-w:      120px;
-    --bar-extend:     22px;
-    --bar-overlap:    6px;
-    --label-size:     2px;
-    --label-letter:   0.14em;
-    --label-pad-l:    6px;
+    transform: translateY(-50%) scale(0.526);
+    transform-origin: right center;
+    --bar-h:          30px;
+    --bar-img-w:      170px;
+    --bar-extend:     36px;
+    --bar-overlap:    8px;
+    --label-size:     10px;
+    --label-letter:   0.18em;
+    --label-pad-l:    10px;
     --stack-right:    4%;
   }
-  /* Center the (possibly 2-line) label vertically; let it wrap on the
-     explicit <br> only — flex-direction stays row (base rule), and we
-     just override padding + line-height for the tighter bar height. */
   .about-section--dark .bar .label {
-    padding: 0 6px 0 var(--label-pad-l);
-    line-height: 1.05;
+    padding: 0 8px 0 var(--label-pad-l);
+    line-height: 1.1;
     overflow: hidden;
   }
 }
 
 @media (max-width: 480px) {
   .about-section--dark .nav-bars {
-    --bar-h:       21px;
-    --bar-img-w:   108px;
-    --bar-extend:  18px;
-    --bar-overlap: 5px;
-    --label-size:  1.75px;
-    --label-pad-l: 5px;
+    --bar-h:       26px;
+    --bar-img-w:   150px;
+    --bar-extend:  30px;
+    --bar-overlap: 7px;
+    --label-size:  9px;
+    --label-pad-l: 8px;
   }
 }
 .about-section--dark .about-content {
