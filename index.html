@@ -4,6 +4,26 @@ title: Yuri Lee
 description: I connect Technology, Human Experience, and the Questions worth solving.
 ---
 
+<!-- Shared gradient defs — referenced by .th-title .amp slash glyphs. -->
+<svg width="0" height="0" style="position:absolute;visibility:hidden" aria-hidden="true">
+  <defs>
+    <linearGradient id="apple-rainbow" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"     stop-color="#61BB46"/>
+      <stop offset="16.66%" stop-color="#61BB46"/>
+      <stop offset="16.66%" stop-color="#FDB827"/>
+      <stop offset="33.33%" stop-color="#FDB827"/>
+      <stop offset="33.33%" stop-color="#F5821F"/>
+      <stop offset="50%"    stop-color="#F5821F"/>
+      <stop offset="50%"    stop-color="#E03A3E"/>
+      <stop offset="66.66%" stop-color="#E03A3E"/>
+      <stop offset="66.66%" stop-color="#963D97"/>
+      <stop offset="83.33%" stop-color="#963D97"/>
+      <stop offset="83.33%" stop-color="#009DDC"/>
+      <stop offset="100%"   stop-color="#009DDC"/>
+    </linearGradient>
+  </defs>
+</svg>
+
 <section class="hero-section" id="main">
   <div class="hero-area">
     <div class="hero" id="hero">I&nbsp;connect&nbsp;<span class="kw-tech">Technology<span class="c1"></span><span class="c2"></span></span>,<br><span class="kw-human">Human Experience</span>,<br>and the <span class="kw-q"><span class="bracket">[</span>Questions<span class="bracket">]</span></span> worth solving.</div>
@@ -44,9 +64,9 @@ description: I connect Technology, Human Experience, and the Questions worth sol
 
   <div class="th-inner">
     <div class="th-col-left">
-      <h2 class="th-title">
-        TECHNOLOGY<br>
-        <span class="amp" aria-hidden="true"><svg viewBox="0 0 24 36" preserveAspectRatio="none" fill="none"><line x1="4" y1="34" x2="20" y2="2" stroke="currentColor" stroke-width="10" stroke-linecap="round" vector-effect="non-scaling-stroke"></line></svg></span>HUMAN&nbsp;EXPERIENCE
+      <h2 class="th-title th-title--rainbow">
+        <span class="ch" style="--i:0">T</span><span class="ch" style="--i:1">E</span><span class="ch" style="--i:2">C</span><span class="ch" style="--i:3">H</span><span class="ch" style="--i:4">N</span><span class="ch" style="--i:5">O</span><span class="ch" style="--i:6">L</span><span class="ch" style="--i:7">O</span><span class="ch" style="--i:8">G</span><span class="ch" style="--i:9">Y</span><br>
+        <span class="th-title-line"><span class="amp" aria-hidden="true"><svg viewBox="0 0 24 36" preserveAspectRatio="none" fill="none"><line x1="4" y1="34" x2="20" y2="2" stroke="url(#apple-rainbow)" stroke-width="10" stroke-linecap="round" vector-effect="non-scaling-stroke"></line></svg></span><span class="ch" style="--i:11">H</span><span class="ch" style="--i:12">U</span><span class="ch" style="--i:13">M</span><span class="ch" style="--i:14">A</span><span class="ch" style="--i:15">N</span><span class="ch ch-sp" style="--i:16">&nbsp;</span><span class="ch" style="--i:17">E</span><span class="ch" style="--i:18">X</span><span class="ch" style="--i:19">P</span><span class="ch" style="--i:20">E</span><span class="ch" style="--i:21">R</span><span class="ch" style="--i:22">I</span><span class="ch" style="--i:23">E</span><span class="ch" style="--i:24">N</span><span class="ch" style="--i:25">C</span><span class="ch" style="--i:26">E</span></span>
       </h2>
       <p class="th-lede">
         a slow notebook on the place where we make tools and the tools make us.
@@ -75,8 +95,19 @@ description: I connect Technology, Human Experience, and the Questions worth sol
     </div>
 
     <div class="th-col-right">
-      <div class="th-mosaic">
-        <img src="{{ '/assets/tech_wall.jpeg' | relative_url }}" alt="" aria-hidden="true">
+      <div class="conveyor" aria-hidden="true">
+        <div class="row row-1"><div class="belt">
+          <img src="{{ '/assets/tech_1.png' | relative_url }}" alt="">
+          <img src="{{ '/assets/tech_1.png' | relative_url }}" alt="">
+        </div></div>
+        <div class="row row-2"><div class="belt">
+          <img src="{{ '/assets/tech_2.png' | relative_url }}" alt="">
+          <img src="{{ '/assets/tech_2.png' | relative_url }}" alt="">
+        </div></div>
+        <div class="row row-3"><div class="belt">
+          <img src="{{ '/assets/tech_3.png' | relative_url }}" alt="">
+          <img src="{{ '/assets/tech_3.png' | relative_url }}" alt="">
+        </div></div>
       </div>
     </div>
   </div>
@@ -181,7 +212,7 @@ description: I connect Technology, Human Experience, and the Questions worth sol
     <div class="th-col-left">
       <h2 class="th-title">
         BODY
-        <span class="amp" aria-hidden="true"><svg viewBox="0 0 24 36" preserveAspectRatio="none" fill="none"><line x1="4" y1="34" x2="20" y2="2" stroke="currentColor" stroke-width="10" stroke-linecap="round" vector-effect="non-scaling-stroke"></line></svg></span>MIND
+        <span class="th-title-line"><span class="amp" aria-hidden="true"><svg viewBox="0 0 24 36" preserveAspectRatio="none" fill="none"><line x1="4" y1="34" x2="20" y2="2" stroke="url(#apple-rainbow)" stroke-width="10" stroke-linecap="round" vector-effect="non-scaling-stroke"></line></svg></span>MIND</span>
       </h2>
       <p class="th-lede">
         notes from training, recovery, attention practice, and the quiet

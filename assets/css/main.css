@@ -780,6 +780,131 @@ a { color: inherit; }
   pointer-events: none;
   background: radial-gradient(120% 90% at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.55) 100%);
 }
+
+/* ============================================================
+   TECH-HUMAN section override — light cream background to match the
+   tech_*.png artifact images. All text inverted from white to ink.
+   Higher specificity (section#id.class) than the base .th-section.
+   ============================================================ */
+section#tech-human.th-section { background: #F6EEE5; color: var(--ink-dark); }
+#tech-human .th-hud { color: rgba(26, 26, 26, 0.55); }
+#tech-human .th-hud .val { color: var(--ink-dark); }
+#tech-human .th-title { color: var(--ink-dark); }
+#tech-human .th-lede { color: rgba(26, 26, 26, 0.72); }
+#tech-human .th-rows { border-top-color: rgba(26, 26, 26, 0.25); }
+#tech-human .th-row { color: var(--ink-dark); border-bottom-color: rgba(26, 26, 26, 0.25); }
+#tech-human .th-row .idx { color: var(--ink-dark); }
+#tech-human .th-row .date { color: rgba(26, 26, 26, 0.5); }
+#tech-human .th-row .read { color: rgba(26, 26, 26, 0.55); }
+#tech-human .th-row:hover { color: #03B1F7; }
+#tech-human .th-row:hover .read { color: #03B1F7; }
+
+/* ─── Title rainbow — per-letter color cycling sweep ─────
+   Hybrid of variant A (per-letter solid color), B (sharp boundaries,
+   no gradient blur within glyph), and D (animated sweep over time).
+   Each .ch span declares its index via --i; the animation-delay is
+   derived as (--i × -0.36s) so consecutive glyphs sit at staggered
+   phases of the 6-color cycle. Net effect: rainbow flows along the
+   title text. */
+#tech-human .th-title--rainbow .ch {
+  display: inline-block;
+  color: var(--ink-dark);
+  animation: rainbowCycle 5.4s linear infinite;
+  animation-delay: calc(var(--i, 0) * -0.36s);
+  will-change: color;
+}
+@keyframes rainbowCycle {
+  0%,  100% { color: #61BB46; }   /* green */
+  16.66%    { color: #FDB827; }   /* yellow */
+  33.33%    { color: #F5821F; }   /* orange */
+  50%       { color: #E03A3E; }   /* red */
+  66.66%    { color: #963D97; }   /* purple */
+  83.33%    { color: #009DDC; }   /* blue */
+}
+/* the non-breaking space between HUMAN and EXPERIENCE keeps width but
+   should not flash colors */
+#tech-human .th-title--rainbow .ch-sp {
+  animation: none;
+  color: transparent;
+}
+@media (prefers-reduced-motion: reduce) {
+  #tech-human .th-title--rainbow .ch {
+    animation: none;
+    color: var(--ink-dark);
+  }
+}
+
+/* ─── Conveyor (right column of #tech-human) ────────────
+   3 stacked rows of tech_*.png that scroll horizontally:
+   row-1 right, row-2 left, row-3 right (alternating)
+   speeds: slow / medium / slow */
+#tech-human .conveyor {
+  position: relative;
+  width: 100%;
+  max-width: 648px;            /* 1.2× of previous 540px */
+  aspect-ratio: 1 / 1;
+  background: transparent;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  isolation: isolate;
+  /* No border per design spec */
+}
+#tech-human .conveyor::after {
+  /* gentle edge fade so images don't pop in/out hard at the rails */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(to right,
+    rgba(246, 238, 229, 1) 0,
+    rgba(246, 238, 229, 0) 5%,
+    rgba(246, 238, 229, 0) 95%,
+    rgba(246, 238, 229, 1) 100%);
+}
+#tech-human .conveyor .row {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+#tech-human .conveyor .belt {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  height: 100%;
+  will-change: transform;
+  animation: convScroll var(--dur, 40s) linear infinite;
+}
+#tech-human .conveyor .belt img {
+  height: 100%;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Direction + speed per row.
+   reverse on row 1, 3 = belt scrolls RIGHT.
+   forward on row 2     = belt scrolls LEFT.
+   speeds slow/medium/slow. */
+#tech-human .conveyor .row-1 .belt { --dur: 55s; animation-direction: reverse; }
+#tech-human .conveyor .row-2 .belt { --dur: 32s; }
+#tech-human .conveyor .row-3 .belt { --dur: 60s; animation-direction: reverse; }
+
+/* Conveyor keeps running on hover (paused-on-hover rule removed) */
+
+@keyframes convScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #tech-human .conveyor .belt { animation: none !important; }
+}
 /* ─── Mobile (≤900px) — Tech-style sections ───────────
    Issues being fixed:
    1. Row grid (44px / 100px / 1fr / auto) compresses title to a
@@ -868,6 +993,10 @@ a { color: inherit; }
 }
 .th-title .amp svg line {
   stroke-linecap: square;   /* square-cap mark instead of rounded */
+}
+/* Keep slash + word on the same line — prevents 3-line wrap when column is narrow */
+.th-title .th-title-line {
+  white-space: nowrap;
 }
 
 /* Tech-section illustration — bottom-right, 2× larger */
