@@ -479,81 +479,44 @@ a { color: inherit; }
 }
 
 /* ─── Mobile (≤900px) ─────────────────────────────────
-   Restructure the About section as a vertical stack: the brain composition
-   sits on top at its natural aspect, and the nav-bars fall in normal flow
-   directly below it. On desktop the bars are absolutely positioned inside
-   the brain-frame (over the right hemisphere); on mobile that overlap is
-   impossible at narrow widths and the brain visual gets squished, so we
-   promote both children to relative flow. */
+   Preserve the desktop structure: brain-frame keeps its aspect ratio,
+   nav-bars stay absolutely-positioned overlapping the right hemisphere.
+   Only adjust sizes so the bars actually fit over the brain visual
+   without spilling left past the section padding. */
 @media (max-width: 900px) {
   .about-section.about-section--dark {
     padding: 60px 24px;
   }
-
-  /* Brain-frame: flow container, scaled up so the brain illustration
-     (which only fills ~40% of its 1672×941 canvas) reads at usable size.
-     Section overflow:hidden clips horizontal spill. */
+  /* Brain-frame: keep wide aspect; scale 1.4 so the brain reads big
+     enough at narrow viewports. Section overflow:hidden clips spill. */
   .about-section--dark .brain-frame {
     transform: scale(1.4);
     transform-origin: center;
-    width: 100%;
-    max-width: none;
-    margin: 0 auto;
-    aspect-ratio: auto;
-    height: auto;
   }
-
-  /* Brain canvas re-enters normal flow at its natural aspect */
-  .about-section--dark .about-bg {
-    position: relative;
-    inset: auto;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1672 / 941;
-    display: block;
-  }
-
-  /* Right-hemisphere illustration overlays the canvas, top-aligned */
-  .about-section--dark .brain-right {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: auto;
-    bottom: auto;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1672 / 941;
-  }
-
-  /* Nav-bars: relative flow below the brain visual.
-     Negative margin pulls the bars upward to compensate for the brain's
-     scale(1.4) extra bottom whitespace. */
+  /* Nav-bars: stay absolutely-positioned over the right hemisphere
+     exactly like desktop, just shrunk to fit inside it. The right-hemi
+     image occupies roughly the right 35-45% of the 1672×941 canvas, so
+     bar widths max out near 130px in pre-scale CSS units (the parent's
+     1.4× scale grows them visually). */
   .about-section--dark .nav-bars {
-    position: relative;
-    top: auto;
-    right: auto;
-    transform: none;
-    width: 100%;
-    max-width: 320px;
-    margin: -40px auto 0;
-    --stack-right:    auto;
-    --bar-h:          56px;
-    --bar-img-w:      clamp(200px, 60vw, 280px);
-    --bar-extend:     clamp(50px, 14vw, 90px);
-    --bar-overlap:    14px;
-    --label-size:     12px;
-    --label-pad-l:    16px;
+    --bar-h:          26px;
+    --bar-img-w:      120px;
+    --bar-extend:     32px;
+    --bar-overlap:    6px;
+    --label-size:     8px;
+    --label-pad-l:    8px;
+    --stack-right:    6%;
   }
 }
 
 @media (max-width: 480px) {
   .about-section--dark .nav-bars {
-    max-width: 280px;
-    --bar-h:       50px;
-    --bar-img-w:   clamp(180px, 65vw, 240px);
-    --bar-extend:  clamp(40px, 14vw, 70px);
-    --label-size:  11px;
-    --label-pad-l: 14px;
+    --bar-h:       22px;
+    --bar-img-w:   100px;
+    --bar-extend:  26px;
+    --bar-overlap: 5px;
+    --label-size:  7px;
+    --label-pad-l: 6px;
   }
 }
 .about-section--dark .about-content {
